@@ -1,6 +1,6 @@
-//require("dotenv").config();
+require("dotenv").config();
 
-var request = require("request");
+//ar request = require("request");
 //var spotify = new Spotify(keys.spotify);
 //var client = new Twitter(keys.twitter);
 
@@ -11,23 +11,48 @@ var Title = process.argv[3];
 
 
 // * `my-tweets`
-// GET https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=985568643516911619&count=20
+
+if (userInput === "my-tweets"){
+
+    var Twitter = require("twitter");
+
+    //var request = require("request");
+
+    var client = new Twitter({
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+        access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+      });
+       
+      var params = {user_id: '985568643516911619', count: "20"};
+      client.get('statuses/user_timeline', params, function(error, tweets, response) {
+         if (!error) {
+          console.log(tweets);
+        }
+      });
+    }
+
+    // var = "https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=985568643516911619&count=20";
+    //console.log(queryUrl);
+
+//GET "https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=985568643516911619&count=20";
 
 
-// request("https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=985568643516911619&count=20", function(error, response, body) {
+//request("https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=985568643516911619&count=20", function(error, response, body) {
 
-//   // If the request was successful...
-//   if (!error && response.statusCode === 200) {
+// If the request was successful...
+ //if (!error && response.statusCode === 200) {
 
-//     // Then log the body from the site!
-//     console.log(body);
-//   }
-// });
-
+     // Then log the body from the site!
+//onsole.log(body);
+// }
+ //});
+//}
 // * `spotify-this-song`
 
 // * `movie-this`
-if (userInput = "movie-this"){
+else if (userInput === "movie-this"){
 
         var request = require("request");
         var movieName = process.argv[3];
@@ -49,7 +74,7 @@ if (userInput = "movie-this"){
         });
     }
     //if no movie is inputed make a request for Mr. Nobody info--work in progress
-    else if (userInput = "movie-this", Title = " "){
+    else if (userInput === "movie-this", Title === " "){
 
         var queryUrl = "http://www.omdbapi.com/?t=mr.nobody&y=&plot=short&apikey=trilogy";
         console.log(queryUrl);
